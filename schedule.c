@@ -27,6 +27,53 @@ void printGantt(G gc[],int n){
     }
     printf("|\n");
 }
+typedef struct{
+    int pid;
+    int arrival;
+    int burst;
+}Node;
+Node heap[100];
+int heapSize = 0;
+// Node swap logic
+void swap(Node *a, Node *b){
+    Node temp = *a;
+    *a = *b;
+    *b = temp;
+}
+void heapPush(Node val){
+    heapSize++;
+    heap[heapSize] = val;
+    int i = heapSize;
+    while(i>1 && heap[i].burst < heap[i/2].burst){
+        swap(&heap[i],&heap[i/2]);
+        i /= 2;
+    }
+}
+Node heapPop(){
+    Node minVal = heap[1];
+    heap[1] = heap[heapSize];
+    heapSize--;
+
+    int i=1;
+    while(1){
+        int left = 2*i;
+        int right = 2*i+1;
+        int smallest = i;
+
+        if(left < heapSize && heap[smallest] > heap[smallest]){
+            smallest = left;
+        }
+        if(right < heapSize && heap[smallest] > heap[smallest]){
+            smallest = right;
+        }
+
+        if(smallest != i){
+            swap(&heap[i],&heap[smallest]);
+            i = smallest;
+        }
+        else break;
+    }
+}
 void printDetails(P p[],int n){
     int time=0;
     int wt = 0;
@@ -64,6 +111,10 @@ void FCFS(P p[],int n){
         }
     }
     printDetails(p,n);
+}
+void SJF(P p[],int n){
+    time = 0;
+    completed = 0;
 }
 void main(){
     int n;
