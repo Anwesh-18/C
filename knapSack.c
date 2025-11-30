@@ -61,5 +61,6 @@ int main() {
     scanf("%d",&W);
     float ans = knapSack(W);
     printf("Answer: %.4f\n",ans);
+    free(bag);
     return 0;
 }
